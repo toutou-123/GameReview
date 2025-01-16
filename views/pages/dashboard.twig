@@ -1,0 +1,171 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/dashboard.css">
+{% endblock %}
+
+{% block main %}
+	<main>
+		<div id="container">
+			<div>
+				<div class="sidebar">
+					<input type="text" placeholder="Rechercher...">
+					<div class="sidebar-item">
+						{% for category in categories %}
+							<div class="category">
+								<button>
+									<span>{{ category.name }}</span>
+								</button>
+								<a href="/delete/category/{{ category.id }}">
+									<span>X</span>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="add-buttons">
+					<button id="add-game">
+						<span>+  AJOUTER JEU</span>
+					</button>
+					<button id="add-category">
+						<span>+  AJOUTER CATEGORIE</span>
+					</button>
+					<button id="swapping">
+						<span>ALTERNER</span>
+					</button>
+				</div>
+			</div>
+			<div class="main-content">
+				<table id="showuser">
+					<tbody>
+						{% for user in users %}
+							{% if user.isAdmin == false %}
+								<tr class="user">
+									<td>
+										{% if user.profileImage %}
+											<img src="/assets/img/uploads/profilePic/{{ user.profileImage }}" alt="User Avatar">
+										{% endif %}
+									</td>
+									<td>
+										<p>{{ user.username }}</p>
+									</td>
+									<td>
+										<a href="/delete/user/{{ user.id }}">
+											<span>delete</span>
+										</a>
+									</td>
+									<td>
+										<button>
+											<span>Ban</span>
+										</button>
+									</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+					</tbody>
+				</table>
+				<table id="showgame">
+					<tbody>
+						{% for game in games %}
+							<tr class="game">
+								<td>
+									{% if game.imageUrl %}
+										<img src="/assets/img/uploads/gamePic/{{ game.imageUrl }}" alt="Game Image">
+									{% endif %}
+								</td>
+								<td>
+									<p>{{ game.name }}</p>
+								</td>
+								<td id="descri-scroll">
+									<p>{{ game.informations }}</p>
+									<a href="{{game.link}}">
+										<span>voir les soluces</span>
+									</a>
+								</td>
+								<td>
+									<button>
+										<span>Modify</span>
+									</button>
+								</td>
+								<td>
+									<button>
+										<span>Delete</span>
+									</button>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="categoryModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<h2>Ajouter une nouvelle catégorie</h2>
+				<form action="/confirmCategory" method="post">
+					<div>
+						<input type="text" id="categoryName" name="categoryName" placeholder="Nom de la catégorie" required>
+					</div>
+					<br>
+					<div>
+						<button type="submit" id="confirmCategory" value="confirmCategory">
+							<span>Ajouter</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="addingGameModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<h2>Ajouter un jeu</h2>
+				<form action="/confirmGame" method="post" enctype="multipart/form-data">
+					<div>
+						<label for="gameName">Nom du jeu :</label>
+						<input type="text" name="gameName" id="gameName">
+					</div>
+					<br>
+					<div>
+						<label for="gameImage">Sélectionner l'image du jeu :</label>
+						<input type="file" id="gameImage" name="gameImage" accept="image/*">
+					</div>
+					<br>
+					<div>
+						<label for="developer">Noms de développeurs :</label>
+						<textarea name="developer" id="developer" row="10"></textarea>
+					</div>
+					<br>
+					<div>
+						<label for="description">Entrez le descriptif du jeu :</label>
+						<textarea name="description" id="description" row="10"></textarea>
+					</div>
+					<br>
+					<div>
+						<label for="link">Entrez le lien :</label>
+						<input type="text" name="link" id="link">
+					</div>
+					<br>
+					<div>
+						<h3>Catégories du jeu :</h3>
+						{% for category in categories %}
+							<div>
+								<input type="checkbox" id="category_{{ category.id }}" name="categories[]" value="{{ category.id }}">
+								<label for="category_{{ category.id }}">{{ category.name }}</label>
+							</div>
+						{% endfor %}
+					</div>
+					<br>
+					<div>
+						<button type="submit" name="confirmGame" value="confirmGame">
+							<span>Ajouter jeu</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+{% block script %}
+	<script src="/assets/js/swapper.js"></script>
+	<script src="/assets/js/categoryModale.js"></script>
+{% endblock %}

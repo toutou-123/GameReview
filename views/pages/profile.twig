@@ -1,0 +1,60 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/profile.css">
+{% endblock %}
+
+{% block main %}
+	<main>
+		<div id="container">
+			<div id="search-container">
+				<div class="sidebar">
+					<input type="text" placeholder="Rechercher...">
+					<div class="sidebar-item">
+						{% for category in categories %}
+							<div class="category">
+								<a href="/home?category={{ category.name }}">
+									<span>{{ category.name }}</span>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div id="profile-container">
+				<div id="identity">
+					<div>
+						<p>temps de ban restant :</p>
+					</div>
+					<div>
+						<img src="/assets/img/uploads/profilePic/{{ user.profileImage }}" alt="User Avatar">
+					</div>
+					<div>
+						<p>{{ user.username }}</p>
+					</div>
+					<div>
+						<a href="/logout">
+							<span>Déconnexion</span>
+						</a>
+					</div>
+				</div>
+				<div id="favorite-games">
+					{% for game in favoriteGames %}
+						<div id="favorite-selected">
+							<div>
+								<p>{{game.name}}</p>
+							</div>
+							<button onclick="removeFromFavorites({{game.id}})"class="remove-favorite-button" data-game-id="{{game.id}}">retirer des favoris</button>
+						</div>
+					{% else %}
+						<p>Aucun jeu favori trouvé.</p>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+	</main>
+{% endblock %}
+{% block script %}
+	<script src="/assets/js/favorites.js"></script>
+{% endblock %}

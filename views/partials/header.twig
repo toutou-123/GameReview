@@ -1,0 +1,57 @@
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/header.css">
+{% endblock %}
+<header>
+
+	<nav>
+		<ul>
+			<li>
+				<a href="/home">
+					<h1>GameReview</h1>
+				</a>
+			</li>
+			{% if user %}
+				<li>
+					{% if user.profileImage %}
+						<img id="profile-image" src="/assets/img/uploads/profilePic/{{ user.profileImage }}" alt="User Avatar">
+					{% endif %}
+				</li>
+				<li>
+					<p id="profile-username">{{user.username}}</p>
+				</li>
+			{% endif %}
+			<div class="burger-menu">
+				<div class="burger-icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<ul class="menu-items">
+					{% if user %}
+						{% if user.isAdmin == true %}
+							<li>
+								<a href="/dashboard">Page admin</a>
+							</li>
+							<li>
+								<a href="/logout">Déconnexion</a>
+							</li>
+						{% else %}
+							<li>
+								<a href="/profile">Profil</a>
+							</li>
+							<li>
+								<a href="/logout">Déconnexion</a>
+							</li>
+						{% endif %}
+					{% else %}
+						<li>
+							<a href="/login">Connexion</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
+	</header>
+	{% block script %}
+		<script src="/assets/js/menu-burger.js"></script>
+	{% endblock %}

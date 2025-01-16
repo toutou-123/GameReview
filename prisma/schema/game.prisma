@@ -1,0 +1,43 @@
+model Game {
+    id           Int        @id @default(autoincrement())
+    name         String
+    imageUrl     String
+    informations String
+    developer    String
+    link         String
+    categories   Category[] @relation("GameByCategory")
+    comments     Comment[]
+    favoritedBy  User[]     @relation("UserFavorites")
+    createdAt    DateTime   @default(now())
+    updatedAt    DateTime   @updatedAt
+}
+
+// Certainement ! Les tableaux _GameToCategory et _UserFavorites sont des tableaux de jonction (aussi appelés tables de liaison) dans votre schéma de base de données.
+// Ils sont utilisés pour gérer des relations many-to-many (plusieurs à plusieurs) entre différentes entités. Voici les spécificités de chacun :
+
+// _GameByCategory :
+
+// - Ce tableau gère la relation many-to-many entre les jeux (Game) et les catégories (Category).
+// - Chaque jeu peut appartenir à plusieurs catégories, et chaque catégorie peut contenir plusieurs jeux.
+// - Il contient deux colonnes : A (qui fait référence à l'ID de la catégorie) et B (qui fait référence à l'ID du jeu).
+// - Les contraintes de clé étrangère assurent l'intégrité référentielle avec les tables Category et Game.
+
+// _UserFavorites :
+
+// - Ce tableau gère la relation many-to-many entre les utilisateurs (User) et les jeux favoris (Game).
+// - Chaque utilisateur peut avoir plusieurs jeux favoris, et chaque jeu peut être favori de plusieurs utilisateurs.
+// - Il contient deux colonnes : A (qui fait référence à l'ID du jeu) et B (qui fait référence à l'ID de l'utilisateur).
+// - Les contraintes de clé étrangère assurent l'intégrité référentielle avec les tables Game et User.
+
+// Ces tableaux de jonction sont automatiquement créés et gérés par Prisma pour représenter les relations many-to-many définies dans votre schéma.
+// Ils permettent une grande flexibilité dans la modélisation des relations entre vos entités, sans avoir besoin de créer manuellement des tables de liaison complexes.
+
+// L'utilisation de ces tableaux de jonction vous permet d'effectuer facilement des requêtes pour :
+
+// - Obtenir toutes les catégories d'un jeu spécifique
+// - Trouver tous les jeux d'une catégorie donnée
+// - Lister les jeux favoris d'un utilisateur
+// - Identifier les utilisateurs qui ont mis un jeu en favori
+
+// Ces relations sont gérées de manière transparente par Prisma, ce qui simplifie considérablement le code nécessaire pour interagir avec ces relations complexes
+// dans votre application.

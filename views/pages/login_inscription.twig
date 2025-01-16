@@ -1,0 +1,90 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/login_inscription.css">
+{% endblock %}
+
+{% block title %}
+	<title>{{title}}</title>
+{% endblock %}
+
+{% block main %}
+	<main>
+		<div class="login-signup-container">
+			<section id="login-section">
+				<h2>Connexion</h2>
+				<form action="/logingIn" method="post">
+					<div>
+						<label for="mail">Adresse mail :</label>
+						<input type="text" name="mail" id="mail">
+					</div>
+					{% if error %}
+						{{error.mail}}
+					{% endif %}
+					<div>
+						<label for="password">Mot de passe :</label>
+						<input type="password" name="password" id="password">
+					</div>
+					{% if error %}
+						{{error.password}}
+					{% endif %}
+					<div>
+						<button type="submit" name="login" value="logingIn">
+							<span class="text">Connexion</span>
+						</button>
+					</div>
+				</form>
+				<br>
+				<div>
+					<button id="newbutton">
+						<span>Nouveau par ici ?</span>
+					</button>
+				</div>
+				{% if error %}
+					<div class="error-message">{{ error }}</div>
+				{% endif %}
+			</section>
+			<section id="signup-section">
+				<h2>Inscription</h2>
+				<form action="/signup" method="post" enctype="multipart/form-data">
+					<div>
+						<label for="mail">Adresse mail :</label>
+						<input type="text" name="mail" id="mail">
+					</div>
+					<div>
+						<label for="profilImage">Sélectionner une image de profil :</label>
+						<input type="file" id="profilImage" name="profilImage" accept="image/*">
+					</div>
+					<div>
+						<label for="username">Entrez votre nom d'utilisateur :</label>
+						<input type="text" name="username" id="username">
+					</div>
+					<div>
+						<label for="password">Mot de passe :</label>
+						<input type="password" name="password" id="password">
+					</div>
+					<div>
+						<label for="confirmPassword">Confirmer votre mot de passe :</label>
+						<input type="password" name="confirmPassword" id="confirmPassword">
+					</div>
+					<div>
+						<button type="submit" name="signup" value="signup">
+							<span>Inscription</span>
+						</button>
+					</div>
+				</form>
+				<br>
+				<div>
+					<button id="oldbutton">
+						<span>déjà inscrit ?</span>
+					</button>
+				</div>
+			</section>
+		</div>
+	</main>
+
+
+{% endblock %}
+{% block script %}
+	<script src="/assets/js/alternate.js"></script>
+{% endblock %}

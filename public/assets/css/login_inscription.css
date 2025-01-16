@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('/assets/img/Trou-noir-etoile.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+h2{
+    text-align: center;
+    font-family: 'Graduate', sans-serif;
+    color: white;
+}
+
+label{
+  font-family: 'Graduate', sans-serif;
+  color: white;
+}
+
+.login-signup-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 100px; /* Espace entre les sections */
+    max-width: 1200px; /* ou la largeur que vous préférez */
+    margin: 0 auto; /* Centre le conteneur horizontalement */
+    padding: 20px; /* Ajoute un peu d'espace autour du conteneur */
+  }
+  
+  #login-section {
+    flex: 1; 
+    padding: 20px;
+    background: linear-gradient(to bottom, hwb(216 0% 0%), black);
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    display: block;
+  }
+  
+  #signup-section{
+    flex: 1; 
+    padding: 20px;
+    background: linear-gradient(to bottom, hwb(270 0% 0%), black);
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    display: block;
+  }
+
+  #login-section form,
+  #signup-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Styles pour les inputs et les boutons */
+  input {
+    width: 98%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+ /* From Uiverse.io by cssbuttons-io */ 
+button {
+    align-items: center;
+    background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    font-size: 18px;
+    justify-content: center;
+    line-height: 1em;
+    width: 100%;
+    padding: 3px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  button:active,
+  button:hover {
+    outline: 0;
+  }
+  
+  button span {
+    background-color: rgb(5, 6, 45);
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
+  }
+  
+  button:hover span {
+    background: none;
+  }
+  
+  button:active {
+    transform: scale(0.9);
+  }
+
+  #newbutton {
+    display: none;
+}
+
+#oldbutton {
+    display: none;
+}
+  
+  @media (max-width: 760px) {
+    #signup-section {
+        display: none;
+    }
+
+    #newbutton {
+        display: flex;
+    }
+
+    #oldbutton {
+        display: none;
+    }
+}

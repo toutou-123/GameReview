@@ -1,0 +1,8 @@
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  gameId    Int
+  game      Game     @relation(fields: [gameId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

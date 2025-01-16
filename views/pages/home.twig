@@ -1,0 +1,117 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/home.css">
+{% endblock %}
+
+{% block main %}
+	<main>
+		<div id="container">
+			<div id="search-container">
+				<div class="sidebar">
+					<input type="text" placeholder="Rechercher...">
+					<div class="sidebar-item">
+						{% for category in categories %}
+							<div class="category">
+								<a href="/home?category={{ category.name }}">
+									<span>{{ category.name }}</span>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				{% if user %}
+					<div id="favorites" role="button">
+						<div>
+							<a href="/home?favorites=true"><span>afficher les favoris</span></a>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+			<div id="game-container">
+				<div class="game-shower">
+					{% for game in games %}
+						<div class="card" data-game-id="{{ game.id }}">
+							<div class="back">
+								<img src="/assets/img/dos jeu.jpg" alt="verso jeux">
+							</div>
+							<div class="front">
+								<img src="/assets/img/uploads/gamePic/{{ game.imageUrl }}" class="clickable-image" data-game-id="{{ game.id }}" alt="{{ game.name }}">
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<div id="modal" class="modal">
+					<div class="modal-content">
+						<span class="close">&times;</span>
+						<div>
+							<div>
+								<img id="modal-image" alt="verso jeux">
+							</div>
+							{% if user %}
+								<div>
+									<button id="favorite-button" class="favorite">Ajouter aux favoris</button>
+								</div>
+							{% endif %}
+						</div>
+						<div id="game-info">
+							<div>
+								<h2 id="modal-title">{{game.name}}</h2>
+							</div>
+						
+							<div>
+								<p>notation générale</p>
+							</div>
+							<div>
+								<p id="modal-description"></p>
+							</div>
+							<div>
+								<p>Lien :</p>
+								<a id="modal-link"></a>
+							</div>
+							<div>
+								<p id="modal-developer"></p>
+							</div>
+							<div>
+								<p>Commentaires :</p>
+								<div>
+									<div>
+										<p>commentaire 1</p>
+									</div>
+									<div>
+										<p>commentaire 2</p>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div id="modal-categories"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="page_selector">
+					<div id="page-precedente">
+						<div>
+							<img src="/assets/img/dos jeu.jpg" alt="page précédente">
+						</div>
+					</div>
+					<div id="page-actuel">
+						<div>
+							<img src="/assets/img/dos jeu.jpg" alt="page actuel">
+						</div>
+					</div>
+					<div id="page-suivante">
+						<div>
+							<img src="/assets/img/dos jeu.jpg" alt="page suivante">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+{% block script %}
+	<script src="/assets/js/return.js"></script>
+	<script src="/assets/js/modale.js"></script>
+	<script src="/assets/js/favorites.js"></script>
+{% endblock %}
