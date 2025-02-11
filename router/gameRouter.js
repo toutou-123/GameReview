@@ -1,5 +1,4 @@
 const gameRouter = require('express').Router();
-
 const { PrismaClient } = require("@prisma/client")
 const bcrypt = require("bcrypt")
 const { uploadGame } = require("../services/upload")
@@ -8,7 +7,6 @@ const hashPasswordExtension = require("../services/extensions/hashPasswordExtens
 const prisma = new PrismaClient().$extends(hashPasswordExtension)
 const fs = require('fs');
 const path = require('path');
-
 
 gameRouter.get('/home', async (req, res) => {
     const categories = await prisma.category.findMany();
@@ -73,9 +71,9 @@ gameRouter.get('/home', async (req, res) => {
             }
         }
 
-    } else if (req.query.favorites){
-
-    }else {
+    } else if (req.query.favorites && req.session.user) {
+        games = favoriteGames;
+    } else {
         games = await prisma.game.findMany({
             include: {
                 categories: true // Inclure les catégories associées
@@ -97,11 +95,12 @@ gameRouter.get('/dashboard', async (req, res) => {
     const categories = await prisma.category.findMany();
     const games = await prisma.game.findMany();
 
+
     res.render('pages/dashboard.twig', {
         title: "GameReview - Page administrateur",
         user: req.session.user,
         users: users,
-        categories: categories,
+        generalCategories: categories,
         games: games
     })
 })
@@ -109,6 +108,7 @@ gameRouter.get('/dashboard', async (req, res) => {
 gameRouter.get('/game/:id', async (req, res) => {
     try {
         const gameId = parseInt(req.params.id);
+        const generalCategories = await prisma.category.findMany();
         const game = await prisma.game.findUnique({
             where: {
                 id: gameId // Récupère l'ID du jeu à partir des paramètres de la requête
@@ -125,10 +125,14 @@ gameRouter.get('/game/:id', async (req, res) => {
                 gameImage: game.imageUrl,
                 developer: game.developer,
                 description: game.informations,
-                link: game.link,
-                categories: game.categories.map(category => category.name) // Récupérer les noms des catégories
+                linkFandom: game.linkFandom,
+                linkSteam: game.linkSteam,
+                categories: game.categories,
+                generalCategories: generalCategories
             };
+
             res.json(response);
+
         } else {
             res.status(404).send('Jeu non trouvé');
         }
@@ -146,14 +150,14 @@ gameRouter.post('/confirmGame', uploadGame.single('gameImage'), async (req, res)
     try {
         const selectCategories = Array.isArray(req.body.categories) ? req.body.categories.map(Number) : [];
 
-        console.log(req.file);
         const game = await prisma.game.create({
             data: {
                 name: req.body.gameName,
                 imageUrl: req.file ? req.file.filename : null,
                 developer: req.body.developer,
                 informations: req.body.description,
-                link: req.body.link,
+                linkFandom: req.body.linkFandom,
+                linkSteam: req.body.linkSteam,
                 categories: {
                     connect: selectCategories.map(id => ({ id }))
                 }
@@ -174,27 +178,89 @@ gameRouter.post('/confirmGame', uploadGame.single('gameImage'), async (req, res)
     }
 })
 
-gameRouter.get('/delete/game/:id', async (req, res) => {
+gameRouter.get('/game/:id/edit', async (req, res) => {
+    const gameId = parseInt(req.params.id);
+    const game = await prisma.game.findUnique({
+        where: { id: gameId },
+        include: { categories: true }
+    });
+    const categories = await prisma.category.findMany();
+
+    res.render('pages/dashboard.twig', {
+        title: "GameReview - Page administrateur",
+        game: game,
+        generalCategories: categories
+    });
+});
+
+gameRouter.post('/modifyGame/:id', uploadGame.single('gameImage'), async (req, res) => {
+    const gameId = parseInt(req.params.id);
+    console.log('Tentative de modification du jeu avec ID:', gameId);
+    try {
+        console.log('Données reçues:', req.body);
+        console.log('Fichier image:', req.file);
+
+        const selectCategories = Array.isArray(req.body.gameCategory) ? req.body.gameCategory.map(Number) : [];
+        console.log('Catégories sélectionnées:', JSON.stringify(selectCategories, null, 2));
+
+        const updateData = {
+            name: req.body.name,
+            imageUrl: req.file ? "/" + req.file.filename : req.body.gameImage,
+            developer: req.body.developer,
+            informations: req.body.description,
+            linkFandom: req.body.linkFandom,
+            linkSteam: req.body.linkSteam,
+            categories: {
+                set: selectCategories.map(id => ({ id: parseInt(id) }))
+            }
+        };
+        console.log('Données de mise à jour:', updateData);
+
+        const game = await prisma.game.update({
+            where: { id: gameId },
+            data: updateData
+        });
+console.log('Données de mise à jour:', game);
+        res.redirect('/dashboard');
+    } catch (error) {
+
+        console.error(error);
+        res.status(500).send('Erreur lors de la modification du jeu');
+    }
+});
+
+gameRouter.use((req, res, next) => {
+    console.log("Requête brute :", req.rawHeaders);
+    next();
+});
+
+gameRouter.get('/deleteGame/:id', async (req, res) => {
+    const gameId = parseInt(req.params.id);
+    console.log(gameId);
+    
     try {
         const game = await prisma.game.delete({
             where: {
-                id: parseInt(req.params.id)
+                id: gameId
             }
         });
 
-        if (game && game.imageUrl) {
-            const imagePath = path.join(__dirname, '../public/assets/img/uploads/gamePic', game.imageUrl);
+console.log(game);
 
-            fs.unlink(imagePath, (err) => {
-                if (err) {
-                    console.error("Erreur lors de la suppression de l'image : ", err);
-                }
-            });
-        }
+
+        // if (game && game.imageUrl) {
+        //     const imagePath = path.join(__dirname, '../public/assets/img/uploads/gamePic', game.imageUrl);
+
+        //     fs.unlink(imagePath, (err) => {
+        //         if (err) {
+        //             console.error("Erreur lors de la suppression de l'image : ", err);
+        //         }
+        //     });
+        // }
         res.redirect('/dashboard');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Erreur lors de la suppression de la catégorie');
+        res.status(500).send('Erreur lors de la suppression du jeu');
     }
 })
 
@@ -230,7 +296,7 @@ gameRouter.delete('/favorites/remove/:gameId', async (req, res) => {
             where: {
                 id: userId,
             },
-            data:{
+            data: {
                 favoriteGames: {
                     disconnect: { id: parseInt(gameId) }  // On relie le jeu à l'utilisateur via la relation
                 }

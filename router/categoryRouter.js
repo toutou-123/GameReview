@@ -3,6 +3,16 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const authguard = require("../services/authguard")
 
+categoryRouter.get('/categories', async (req, res) => {
+    try {
+        const categories = await prisma.category.findMany();
+        res.json(categories);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erreur lors de la récupération des catégories');
+    }
+});
+
 categoryRouter.post('/confirmCategory', async (req, res) => {
     try {
         // Création de la nouvelle catégorie

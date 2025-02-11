@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block main %}
+	<head>
+		<title>{{ title }}</title>
+	</head>
 	<main>
 		<div id="container">
 			<div id="search-container">
@@ -22,9 +25,9 @@
 				</div>
 				{% if user %}
 					<div id="favorites" role="button">
-						<div>
-							<a href="/home?favorites=true"><span>afficher les favoris</span></a>
-						</div>
+						<a href="/home?favorites=true">
+							<span>afficher les favoris</span>
+						</a>
 					</div>
 				{% endif %}
 			</div>
@@ -44,47 +47,58 @@
 				<div id="modal" class="modal">
 					<div class="modal-content">
 						<span class="close">&times;</span>
-						<div>
+						<div id="game-content">
 							<div>
-								<img id="modal-image" alt="verso jeux">
-							</div>
-							{% if user %}
 								<div>
-									<button id="favorite-button" class="favorite">Ajouter aux favoris</button>
+									<img id="modal-image" alt="verso jeux">
 								</div>
-							{% endif %}
-						</div>
-						<div id="game-info">
-							<div>
-								<h2 id="modal-title">{{game.name}}</h2>
+								{% if user %}
+									<div>
+										<button id="favorite-button" class="favorite">
+											<span>Ajouter aux favoris</span>
+										</button>
+									</div>
+								{% endif %}
 							</div>
-						
-							<div>
-								<p>notation générale</p>
-							</div>
-							<div>
-								<p id="modal-description"></p>
-							</div>
-							<div>
-								<p>Lien :</p>
-								<a id="modal-link"></a>
-							</div>
-							<div>
-								<p id="modal-developer"></p>
-							</div>
-							<div>
-								<p>Commentaires :</p>
+							<div id="game-info">
 								<div>
-									<div>
-										<p>commentaire 1</p>
-									</div>
-									<div>
-										<p>commentaire 2</p>
+									<h2 id="modal-title">{{game.name}}</h2>
+								</div>
+
+								<div>
+									<p>notation générale</p>
+								</div>
+								<div>
+									<p id="modal-description"></p>
+								</div>
+								<div>
+									<p>Lien d'achat du jeu :</p>
+									<a id="modal-linkSteam"></a>
+								</div>
+								<div>
+									<p>Lien du wiki du jeu :</p>
+									<a id="modal-linkFandom"></a>
+								</div>
+								<div>
+									<p id="modal-developer"></p>
+								</div>
+								<div>
+									<p>Commentaires :</p>
+									<div id="comment-list">
+										<div>
+											<p>commentaire 1</p>
+										</div>
+										<div>
+											<p>commentaire 2</p>
+										</div>
+										<div>
+											<p>commentaire 3</p>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div>
-								<div id="modal-categories"></div>
+								<div>
+									<div id="modal-categories"></div>
+								</div>
 							</div>
 						</div>
 					</div>

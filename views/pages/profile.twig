@@ -5,22 +5,11 @@
 {% endblock %}
 
 {% block main %}
+	<head>
+		<title>{{ title }}</title>
+	</head>
 	<main>
 		<div id="container">
-			<div id="search-container">
-				<div class="sidebar">
-					<input type="text" placeholder="Rechercher...">
-					<div class="sidebar-item">
-						{% for category in categories %}
-							<div class="category">
-								<a href="/home?category={{ category.name }}">
-									<span>{{ category.name }}</span>
-								</a>
-							</div>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
 			<div id="profile-container">
 				<div id="identity">
 					<div>
@@ -33,22 +22,39 @@
 						<p>{{ user.username }}</p>
 					</div>
 					<div>
-						<a href="/logout">
-							<span>Déconnexion</span>
-						</a>
+						<form action="/logout" method="GET">
+							<button type="submit">
+								<span>Déconnexion</span>
+							</button>
+						</form>
 					</div>
 				</div>
-				<div id="favorite-games">
-					{% for game in favoriteGames %}
-						<div id="favorite-selected">
-							<div>
-								<p>{{game.name}}</p>
-							</div>
-							<button onclick="removeFromFavorites({{game.id}})"class="remove-favorite-button" data-game-id="{{game.id}}">retirer des favoris</button>
+				<div id="propositions">
+
+					<form id="proposing" action="/proposing" method="POST" enctype="multipart/form-data">
+						<div>
+							<h2>Proposer un nouveau jeu</h2>
 						</div>
-					{% else %}
-						<p>Aucun jeu favori trouvé.</p>
-					{% endfor %}
+						<div>
+							<label for="gameName">Insérez le nom du jeu :
+							</label>
+							<input type="text" name="gameName" id="gameName">
+						</div>
+						<div>
+							<label for="gamePhoto">Insérez une photo du jeu :
+							</label>
+							<input type="file" name="gamePhoto" id="gamePhoto" accept="image/*">
+						</div>
+						<div>
+							<label for="shortDesc">
+								Décrivez ce jeu comme vous pouvez :
+							</label>
+							<textarea name="shortDesc" id="shortDesc"></textarea>
+						</div>
+						<button type="submit">
+							<span>Proposez maintenant</span>
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>

@@ -4,16 +4,20 @@
 	<link rel="stylesheet" href="/assets/css/login_inscription.css">
 {% endblock %}
 
-{% block title %}
-	<title>{{title}}</title>
-{% endblock %}
-
 {% block main %}
+	<head>
+		<title>{{ title }}</title>
+	</head>
 	<main>
+		<div id="modification_notification">
+			{% if message %}
+				<p>{{ message }}</p>
+			{% endif %}
+		</div>
 		<div class="login-signup-container">
 			<section id="login-section">
 				<h2>Connexion</h2>
-				<form action="/logingIn" method="post">
+				<form action="/logingIn" method="POST">
 					<div>
 						<label for="mail">Adresse mail :</label>
 						<input type="text" name="mail" id="mail">
@@ -40,20 +44,24 @@
 						<span>Nouveau par ici ?</span>
 					</button>
 				</div>
+				<div>
+					<button onclick="window.location.href='/Iforgor'" id="Iforgor">
+						<span>Mot de passe oublié ?</span>
+					</button>
+				</div>
 				{% if error %}
 					<div class="error-message">{{ error }}</div>
 				{% endif %}
 			</section>
 			<section id="signup-section">
 				<h2>Inscription</h2>
-				<form action="/signup" method="post" enctype="multipart/form-data">
+				{% if error %}
+					{{error.confirmPassword}}
+				{% endif %}
+				<form action="/signup" method="POST" enctype="multipart/form-data">
 					<div>
 						<label for="mail">Adresse mail :</label>
 						<input type="text" name="mail" id="mail">
-					</div>
-					<div>
-						<label for="profilImage">Sélectionner une image de profil :</label>
-						<input type="file" id="profilImage" name="profilImage" accept="image/*">
 					</div>
 					<div>
 						<label for="username">Entrez votre nom d'utilisateur :</label>
@@ -66,6 +74,10 @@
 					<div>
 						<label for="confirmPassword">Confirmer votre mot de passe :</label>
 						<input type="password" name="confirmPassword" id="confirmPassword">
+					</div>
+					<div>
+						<label for="profilImage">Sélectionner une image de profil :</label>
+						<input type="file" id="profilImage" name="profilImage" accept="image/*">
 					</div>
 					<div>
 						<button type="submit" name="signup" value="signup">
@@ -82,8 +94,16 @@
 			</section>
 		</div>
 	</main>
-
-
+	<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                var notification = document.getElementById("modification_notification");
+                if (notification) {
+                    notification.style.display = "none";
+                }
+            }, 5000);
+        });
+    </script>
 {% endblock %}
 {% block script %}
 	<script src="/assets/js/alternate.js"></script>

@@ -146,6 +146,51 @@ input {
     transform: scale(0.9);
 }
 
+#favorites a {
+    align-items: center;
+    background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    font-size: 18px;
+    justify-content: center;
+    line-height: 1em;
+    width: 100%;
+    padding: 3px;
+    text-decoration: none;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#favorites a:active,
+#favorites a:hover {
+    outline: 0;
+}
+
+#favorites a span {
+    background-color: rgb(5, 6, 45);
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
+}
+
+#favorites a:hover span {
+    background: none;
+}
+
+#favorites a:active {
+    transform: scale(0.9);
+}
 
 .sidebar {
     background-color: rgba(61, 61, 61, 0.75);
@@ -155,7 +200,7 @@ input {
 }
 
 .sidebar-item {
-    height: 300px;
+    height: 500px;
     overflow-y: scroll;
 }
 
@@ -187,7 +232,7 @@ input {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: #000000db;
 }
 
 .modal-content p{
@@ -195,10 +240,8 @@ input {
 }
 
 .modal-content {
-    background-color: #fefefe;
     margin:25px auto;
     padding: 20px;
-    border: 1px solid #888;
     width: 80%;
 }
 
@@ -218,4 +261,85 @@ input {
 
 .modal a {
     color: black;
+}
+
+#game-content{
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top: 20px;
+}
+
+#modal-image{
+    width: 400px;
+}
+
+#game-info {
+    margin-left: 20px;
+}
+
+#game-info div{
+    background-image: linear-gradient(144deg, #af40ffdb, #5b42f3db 50%, #00dbebdb);
+    padding: 5px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+#game-info div p{
+    color: white;
+}
+
+#game-info div a{
+    color: white;
+}
+
+#favorite-button {
+    align-items: center;
+    background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    font-size: 18px;
+    justify-content: center;
+    line-height: 1em;
+    width: 100%;
+    padding: 3px;
+    text-decoration: none;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#favorite-button:active,
+#favorite-button:hover {
+    outline: 0;
+}
+
+#favorite-button span {
+    background-color: rgb(5, 6, 45);
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
+}
+
+#favorite-button:hover span {
+    background: none;
+}
+
+#favorite-button:active {
+    transform: scale(0.9);
+}
+
+#comment-list{
+    overflow-y: scroll;
+    height: 120px;
 }

@@ -56,40 +56,107 @@ body {
     padding: 20px;
     margin: 20px;
     box-sizing: border-box;
-    background: rgba(182, 182, 182, 0.7);
+    background: rgba(0, 0, 0, 0.71);
     overflow-y: scroll;
+}
+
+.game {
+    display: flex;
+    width: 100%;
+    margin-bottom: 3em;
 }
 
 .game p {
     overflow-y: auto;
 }
 
+.game img {
+    width: 80%;
+}
+
+.td {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.td button {
+    width: 100%;
+    margin: auto;
+}
+
 #descri-scroll {
     width: 300px;
 }
 
-.main-content table {
+#deleteForm p {
+    color: black;
+}
+
+.user {
+    display: flex;
+    justify-content: space-around;
     width: 100%;
-    border-collapse: collapse;
-    overflow-y: 600px;
+    margin-bottom: 3em;
 }
 
-.main-content table, td {
-    border: 1px solid rgb(0, 0, 0);
+.user p {
+    overflow-y: auto;
 }
 
-.main-content td {
-    padding: 10px;
+.user img {
+    width: 80%;
+}
+
+.td a {
+    align-items: center;
+    background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    font-size: 18px;
+    justify-content: center;
+    line-height: 1em;
+    width: 100%;
+    padding: 3px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.td a:active,
+.td a:hover {
+    outline: 0;
+}
+
+.td a span {
+    background-color: rgb(5, 6, 45);
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
     text-align: center;
 }
 
-.main-content td img {
-    width: 50px;
-    height: 75px;
+.td a:hover span {
+    background: none;
+}
+
+.td a:active {
+    transform: scale(0.9);
 }
 
 #showuser {
-    display: table;
+    display: flex;
 }
 
 #showgame {
@@ -97,7 +164,7 @@ body {
 }
 
 .add-buttons button {
-    background: #07cc00;
+    background: #059e00;
     border: 0;
     border-radius: 8px;
     box-shadow: rgba(152, 65, 252, 0.37) 0 15px 30px -5px;
@@ -208,7 +275,7 @@ button:active {
 
 .modal-content {
     background-color: #fefefe;
-    margin:25px auto;
+    margin: 25px auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;

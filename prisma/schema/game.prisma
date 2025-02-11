@@ -2,9 +2,10 @@ model Game {
     id           Int        @id @default(autoincrement())
     name         String
     imageUrl     String
-    informations String
+    informations String     @db.VarChar(10000)
     developer    String
-    link         String
+    linkFandom   String
+    linkSteam    String
     categories   Category[] @relation("GameByCategory")
     comments     Comment[]
     favoritedBy  User[]     @relation("UserFavorites")

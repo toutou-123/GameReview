@@ -16,6 +16,10 @@ app.use(userRouter)
 app.use(gameRouter)
 app.use(categoryRouter)
 
+app.use((req, res, next) => {
+    console.log("Requête brute :", req.rawHeaders);
+    next();
+});
 
 app.listen(3000, () => {
     console.log("connecté au port 3000");

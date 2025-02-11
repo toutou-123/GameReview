@@ -1,5 +1,5 @@
 header {
-    background-color: rgba(51, 51, 51, 0.9); /* Fond plus sombre et plus opaque */
+    background-color: #333333; /* Fond plus sombre et plus opaque */
     position: sticky; /* Rend le header collant */
     top: 0;
     z-index: 1;

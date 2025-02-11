@@ -29,6 +29,18 @@ const storageGame = multer.diskStorage({
     }
 });
 
+const storagePropo = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/assets/img/uploads/propoImage');
+    },
+    filename: function (req, file, cb) {
+        let extArray = file.mimetype.split("/");
+        let extension = extArray[extArray.length - 1];
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + "." + extension);
+    }
+});
+
 // Exporter les deux uploaders
 const uploadProfile = multer({
     storage: storageProfile,
@@ -52,4 +64,15 @@ const uploadGame = multer({
     }
 });
 
-module.exports = { uploadProfile, uploadGame };
+const uploadPropo = multer({
+    storage: storagePropo,
+    fileFilter: function (req, file, cb) {
+        if (!mimeType.includes(file.mimetype)) {
+            req.multerError = true;
+            return cb(null, false);
+        }
+        cb(null, true);
+    }
+});
+
+module.exports = { uploadProfile, uploadGame, uploadPropo };
