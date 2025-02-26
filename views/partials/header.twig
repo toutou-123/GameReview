@@ -11,45 +11,68 @@
 				</a>
 			</li>
 			{% if user %}
-				<li>
-					{% if user.profileImage %}
-						<img id="profile-image" src="/assets/img/uploads/profilePic/{{ user.profileImage }}" alt="User Avatar">
-					{% endif %}
-				</li>
-				<li>
-					<p id="profile-username">{{user.username}}</p>
-				</li>
+				{% if currentPage is not defined or currentPage != 'profile' %}
+					<li>
+						<p id="profile-username">{{user.username}}</p>
+					</li>
+				{%  endif %}
 			{% endif %}
-			<div class="burger-menu">
-				<div class="burger-icon">
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-				<ul class="menu-items">
-					{% if user %}
-						{% if user.isAdmin == true %}
-							<li>
-								<a href="/dashboard">Page admin</a>
-							</li>
-							<li>
-								<a href="/logout">Déconnexion</a>
-							</li>
+			{% if currentPage is not defined or currentPage != 'login' %}
+				<div class="burger-menu">
+					<div class="burger-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					<ul class="menu-items">
+						{% if user %}
+							{% if user.isAdmin == true %}
+								<li>
+									<a href="/dashboard">Page admin</a>
+								</li>
+								<li>
+									<a href="/logout">Déconnexion</a>
+								</li>
+							{% else %}
+								<li>
+									<a href="/profile">Profil</a>
+								</li>
+								<li>
+									<a href="/logout">Déconnexion</a>
+								</li>
+							{% endif %}
 						{% else %}
 							<li>
-								<a href="/profile">Profil</a>
-							</li>
-							<li>
-								<a href="/logout">Déconnexion</a>
+								<a href="/login">Connexion</a>
 							</li>
 						{% endif %}
-					{% else %}
 						<li>
-							<a href="/login">Connexion</a>
+							<div id="search-container">
+								<div class="sidebar">
+									<input type="text" placeholder="Rechercher...">
+									<div class="sidebar-item">
+										{% for category in categories %}
+											<div class="category">
+												<a href="/home?category={{ category.name }}">
+													<span>{{ category.name }}</span>
+												</a>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+								{% if user %}
+									<div id="favorites" role="button">
+										<a href="/home?favorites=true">
+											<span>afficher les favoris</span>
+										</a>
+									</div>
+								{% endif %}
+							</div>
 						</li>
-					{% endif %}
-				</ul>
-			</div>
+					</ul>
+				</div>
+			{% endif %}
+
 		</nav>
 	</header>
 	{% block script %}

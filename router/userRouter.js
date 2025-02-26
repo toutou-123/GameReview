@@ -16,14 +16,16 @@ userRouter.get('/login', (req, res) => {
     const message = req.session.message;
     res.render('pages/login_inscription.twig', {
         title: "Connexion ou inscription - GameReview",
-        message: message
+        message: message,
+        currentPage:'login'
     })
 })
 
 userRouter.get('/profile', async (req, res) => {
     res.render('pages/profile.twig', {
         title: "Profil - GameReview",
-        user: req.session.user
+        user: req.session.user,
+        currentPage:'profile'
     })
 })
 

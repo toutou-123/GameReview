@@ -45,9 +45,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('modifyLinkFandom').value = game.linkFandom;
                     document.getElementById('modifyLinkSteam').value = game.linkSteam;
 
+
                     const categoriesContainer = document.getElementById('modal-categories');
                     categoriesContainer.innerHTML = '';
                     categories.forEach(category => {
+                        const categoriesDiv = document.createElement('div');
+                        categoriesDiv.className = 'categories';
                         input = document.createElement("input")
                         input.type = "checkbox"
                         input.name = "gameCategory"
@@ -56,8 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         label = document.createElement("label")
                         label.for = "gameCategory"
                         label.innerHTML = category.name
-                        categoriesContainer.appendChild(input);
-                        categoriesContainer.appendChild(label);
+                        categoriesDiv.appendChild(input);
+                        categoriesDiv.appendChild(label);
+                        categoriesContainer.appendChild(categoriesDiv)
                     });
                 })
                 .catch(error => console.error('Erreur:', error));

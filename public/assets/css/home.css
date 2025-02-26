@@ -122,6 +122,7 @@ input {
     white-space: nowrap;
     cursor: pointer;
     transition: all 0.3s;
+    font-family: 'Bruno Ace', sans-serif;
 }
 
 .category a:active,
@@ -232,17 +233,18 @@ input {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: #000000db;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content p{
+.modal-content p {
     color: black;
 }
 
 .modal-content {
-    margin:25px auto;
+    margin: 0 auto;
     padding: 20px;
     width: 80%;
+    font-family: 'Graduate', sans-serif;
 }
 
 .close {
@@ -263,14 +265,14 @@ input {
     color: black;
 }
 
-#game-content{
+#game-content {
     display: flex;
-    justify-content:space-between;
-    align-items:center;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 20px;
 }
 
-#modal-image{
+#modal-image {
     width: 400px;
 }
 
@@ -278,19 +280,81 @@ input {
     margin-left: 20px;
 }
 
-#game-info div{
-    background-image: linear-gradient(144deg, #af40ffdb, #5b42f3db 50%, #00dbebdb);
+#game-info div {
+    background-color: #242424cc;
     padding: 5px;
     color: white;
     margin-bottom: 5px;
 }
 
-#game-info div p{
+#game-info div p {
     color: white;
 }
 
-#game-info div a{
+#game-info div a {
     color: white;
+}
+
+#arrow-right {
+    top: -4px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+#arrow-right::before,
+#arrow-right::after {
+    content: '';
+    position: absolute;
+    right: -30px;
+    width: 50px;
+    height: 9px;
+    background-color: #ffffff;
+}
+
+#arrow-right::before {
+    top: -15px;
+    transform: rotate(45deg);
+}
+
+#arrow-right::after {
+    top: 15px;
+    transform: rotate(-45deg);
+}
+
+#arrow-left {
+    top: -4px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+#arrow-left::before,
+#arrow-left::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    width: 50px;
+    height: 9px;
+    background-color: #ffffff;
+}
+
+#arrow-left::before {
+    top: -15px;
+    transform: rotate(-45deg);
+}
+
+#arrow-left::after {
+    top: 15px;
+    transform: rotate(45deg);
+}
+
+.arrow-container {
+    width: 100px;
+    height: 100px;
+    background-image: linear-gradient(90deg, #af40ff, #5b42f3 50%, #00ddeb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }
 
 #favorite-button {
@@ -339,7 +403,7 @@ input {
     transform: scale(0.9);
 }
 
-#comment-list{
+#comment-list {
     overflow-y: scroll;
     height: 120px;
 }

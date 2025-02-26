@@ -11,7 +11,7 @@ newly.addEventListener("click", function() {
 });
 
 older.addEventListener("click", function(){
-    connform.style.display = "block"
+    connform.style.display = "flex"
     inscrform.style.display = "none"
     newly.style.display = "flex"
 })

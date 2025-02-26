@@ -11,15 +11,15 @@
 	<main>
 		<div id="container">
 			<div>
-				<div class="sidebar">
+				<div id="sidebar">
 					<input type="text" placeholder="Rechercher...">
 					<div class="sidebar-item">
 						{% for category in generalCategories %}
 							<div class="category">
-								<button>
+								<a href="/dashboard?category={{ category.name }}" class="cat-name">
 									<span>{{ category.name }}</span>
-								</button>
-								<a href="/delete/category/{{ category.id }}">
+								</a>
+								<a href="/delete/category/{{ category.id }}" class="delete-category">
 									<span>X</span>
 								</a>
 							</div>
@@ -39,33 +39,6 @@
 				</div>
 			</div>
 			<div class="main-content">
-				<div id="showuser">
-					{% for user in users %}
-						{% if user.isAdmin == false %}
-							<div class="user">
-								<div class="td">
-									{% if user.profileImage %}
-										<img src="/assets/img/uploads/profilePic/{{ user.profileImage }}" alt="User Avatar">
-									{% endif %}
-								</div>
-								<div class="td">
-									<p>{{ user.username }}</p>
-								</div>
-								<div class="td">
-									<a href="/delete/user/{{ user.id }}">
-										<span>delete</span>
-									</a>
-								</div>
-								<div class="td">
-									<button>
-										<span>Ban</span>
-									</button>
-								</div>
-							</div>
-
-						{% endif %}
-					{% endfor %}
-				</div>
 				<div id="showgame">
 					{% for game in games %}
 						<div class="game">
@@ -93,6 +66,33 @@
 						</div>
 					{% endfor %}
 				</div>
+				<div id="showuser">
+					{% for user in users %}
+						{% if user.isAdmin == false %}
+							<div class="user">
+								<div class="td">
+									{% if user.profileImage %}
+										<img src="/assets/img/uploads/profilePic/{{ user.profileImage }}" alt="User Avatar">
+									{% endif %}
+								</div>
+								<div class="td">
+									<p>{{ user.username }}</p>
+								</div>
+								<div class="td">
+									<a href="/delete/user/{{ user.id }}">
+										<span>delete</span>
+									</a>
+								</div>
+								<div class="td">
+									<button>
+										<span>Ban</span>
+									</button>
+								</div>
+							</div>
+
+						{% endif %}
+					{% endfor %}
+				</div>
 			</div>
 		</div>
 		<div id="categoryModal" class="modal">
@@ -115,48 +115,57 @@
 		<div id="addingGameModal" class="modal">
 			<div class="modal-content">
 				<span class="close">&times;</span>
-				<h2>Ajouter un jeu</h2>
-				<form action="/confirmGame" method="POST" enctype="multipart/form-data">
-					<div>
-						<label for="gameName">Nom du jeu :</label>
-						<input type="text" name="gameName" id="gameName">
-					</div>
-					<br>
-					<div>
-						<label for="gameImage">Sélectionner l'image du jeu :</label>
-						<input type="file" id="gameImage" name="gameImage" accept="image/*">
-					</div>
-					<br>
-					<div>
-						<label for="developer">Noms de développeurs :</label>
-						<textarea name="developer" id="developer" row="10"></textarea>
-					</div>
-					<br>
-					<div>
-						<label for="description">Entrez le descriptif du jeu :</label>
-						<textarea name="description" id="description" row="10"></textarea>
-					</div>
-					<br>
-					<div>
-						<label for="linkFandom">Entrez le lien du fandom :</label>
-						<input type="text" name="linkFandom" id="linkFandom">
-					</div>
-					<br>
-					<div>
-						<label for="linkSteam">Entrez le lien du steam (si existant) :</label>
-						<input type="text" name="linkSteam" id="linkSteam">
-					</div>
-					<br>
-					<div>
-						<h3>Catégories du jeu :</h3>
-						{% for category in generalCategories %}
-							<div>
-								<input type="checkbox" id="category_{{ category.id }}" name="categories[]" value="{{ category.id }}">
-								<label for="category_{{ category.id }}">{{ category.name }}</label>
+				<div class="modal-title">
+					<h2>Ajouter un jeu</h2>
+				</div>
+				<form action="/addGame" id="addForm" method="POST" enctype="multipart/form-data">
+					<div id="add-info">
+						<div>
+							<div class="info-game">
+								<label for="gameName">Nom du jeu :</label>
+								<input type="text" name="gameName" id="gameName">
 							</div>
-						{% endfor %}
+							<br>
+							<div class="info-game">
+								<label for="gameImage">Sélectionner l'image du jeu :</label>
+								<input type="file" id="gameImage" name="gameImage" accept="image/*">
+							</div>
+						</div>
+						<div>
+							<div class="info-game">
+								<label for="developer">Noms de développeurs :</label>
+								<textarea name="developer" id="developer" row="10"></textarea>
+							</div>
+							<br>
+							<div class="info-game">
+								<label for="description">Entrez le descriptif du jeu :</label>
+								<textarea name="description" id="description" row="10"></textarea>
+							</div>
+						</div>
+						<div>
+							<div class="info-game">
+								<label for="linkFandom">Entrez le lien du fandom :</label>
+								<input type="text" name="linkFandom" id="linkFandom">
+							</div>
+							<br>
+							<div class="info-game">
+								<label for="linkSteam">Entrez le lien du steam (si existant) :</label>
+								<input type="text" name="linkSteam" id="linkSteam">
+							</div>
+						</div>
 					</div>
 					<br>
+					<div class="category-container">
+						<h3>Catégories du jeu :</h3>
+						<div class="add-category">
+							{% for category in generalCategories %}
+								<div class="categories">
+									<input type="checkbox" id="category_{{ category.id }}" name="categories[]" value="{{ category.id }}">
+									<label for="category_{{ category.id }}">{{ category.name }}</label>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
 					<div>
 						<button type="submit" name="confirmGame" value="confirmGame">
 							<span>Ajouter jeu</span>
@@ -170,43 +179,47 @@
 				<span class="close">&times;</span>
 				<h2>Modifier un jeu</h2>
 				<form id="modifyForm" action="/modifyGame/{{ game.id }}" method="POST" enctype="multipart/form-data">
-					<div>
-						<label for="name">Nom du jeu :</label>
-						<input type="text" name="name" id="modifyName" value="{{ game.name }}">
-					</div>
-					<br>
-					<div>
-						<label for="developer">Noms de développeurs :</label>
-						<textarea name="developer" id="modifyDeveloper" row="10" value="{{ game.developer }}"></textarea>
-					</div>
-					<br>
-					<div>
-						<label for="description">Entrez le descriptif du jeu :</label>
-						<textarea name="description" id="modifyDescription" row="10" value="{{ game.description }}"></textarea>
-					</div>
-					<br>
-					<div>
-						<label for="linkFandom">Entrez le lien du fandom :</label>
-						<input type="text" name="linkFandom" id="modifyLinkFandom" value="{{ game.linkFandom }}">
-					</div>
-					<br>
-					<div>
-						<label for="linkSteam">Entrez le lien du steam (si existant) :</label>
-						<input type="text" name="linkSteam" id="modifyLinkSteam" value="{{ game.linkSteam }}">
-					</div>
-					<br>
-					<div>
-						<label for="gameImage">Sélectionner l'image du jeu :</label>
-						<input type="file" id="modifyImage" name="gameImage" accept="image/*" value="{{ game.gameImage }}">
-					</div>
-					<br>
-					<div>
-						<h3>Catégories du jeu :</h3>
+					<div id="modify-info">
 						<div>
-							<div id="modal-categories"></div>
+							<div class="info-game">
+								<label for="name">Nom du jeu :</label>
+								<input type="text" name="name" id="modifyName" value="{{ game.name }}">
+							</div>
+							<br>
+							<div class="info-game">
+								<label for="gameImage">Sélectionner l'image du jeu :</label>
+								<input type="file" id="modifyImage" name="gameImage" accept="image/*" value="{{ game.gameImage }}">
+							</div>
+						</div>
+						<br>
+						<div>
+							<div class="info-game">
+								<label for="developer">Noms de développeurs :</label>
+								<textarea name="developer" id="modifyDeveloper" row="10" value="{{ game.developer }}"></textarea>
+							</div>
+							<br>
+							<div class="info-game">
+								<label for="description">Entrez le descriptif du jeu :</label>
+								<textarea name="description" id="modifyDescription" row="10" value="{{ game.description }}"></textarea>
+							</div>
+						</div>
+						<br>
+						<div>
+							<div class="info-game">
+								<label for="linkFandom">Entrez le lien du fandom :</label>
+								<input type="text" name="linkFandom" id="modifyLinkFandom" value="{{ game.linkFandom }}">
+							</div>
+							<br>
+							<div class="info-game">
+								<label for="linkSteam">Entrez le lien du steam (si existant) :</label>
+								<input type="text" name="linkSteam" id="modifyLinkSteam" value="{{ game.linkSteam }}">
+							</div>
 						</div>
 					</div>
-					<br>
+					<div class="category-container">
+						<h3>Catégories du jeu :</h3>
+						<div id="modal-categories"></div>
+					</div>
 					<div>
 						<button type="submit" name="modifyGame" value="modifyGame">
 							<span>Modifier jeu</span>

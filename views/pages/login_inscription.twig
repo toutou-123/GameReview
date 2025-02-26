@@ -4,6 +4,8 @@
 	<link rel="stylesheet" href="/assets/css/login_inscription.css">
 {% endblock %}
 
+{# {% block header %}{% endblock %} #}
+
 {% block main %}
 	<head>
 		<title>{{ title }}</title>
@@ -16,7 +18,10 @@
 		</div>
 		<div class="login-signup-container">
 			<section id="login-section">
-				<h2>Connexion</h2>
+				<div class="connect-container">
+					<h2 class="connect">Connexion</h2>
+				</div>
+
 				<form action="/logingIn" method="POST">
 					<div>
 						<label for="mail">Adresse mail :</label>
@@ -38,17 +43,17 @@
 						</button>
 					</div>
 				</form>
-				<br>
+				<div id="forgor-container">
+					<button onclick="window.location.href='/Iforgor'" id="Iforgor">
+						<span>Mot de passe oublié ?</span>
+					</button>
+				</div>
 				<div>
 					<button id="newbutton">
 						<span>Nouveau par ici ?</span>
 					</button>
 				</div>
-				<div>
-					<button onclick="window.location.href='/Iforgor'" id="Iforgor">
-						<span>Mot de passe oublié ?</span>
-					</button>
-				</div>
+
 				{% if error %}
 					<div class="error-message">{{ error }}</div>
 				{% endif %}
@@ -95,15 +100,15 @@
 		</div>
 	</main>
 	<script>
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(function() {
-                var notification = document.getElementById("modification_notification");
-                if (notification) {
-                    notification.style.display = "none";
-                }
-            }, 5000);
-        });
-    </script>
+		document.addEventListener("DOMContentLoaded", function () {
+setTimeout(function () {
+var notification = document.getElementById("modification_notification");
+if (notification) {
+notification.style.display = "none";
+}
+}, 5000);
+});
+	</script>
 {% endblock %}
 {% block script %}
 	<script src="/assets/js/alternate.js"></script>

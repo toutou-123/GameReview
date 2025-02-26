@@ -13,16 +13,13 @@
 			<div id="profile-container">
 				<div id="identity">
 					<div>
-						<p>temps de ban restant :</p>
-					</div>
-					<div>
 						<img src="/assets/img/uploads/profilePic/{{ user.profileImage }}" alt="User Avatar">
 					</div>
 					<div>
 						<p>{{ user.username }}</p>
 					</div>
 					<div>
-						<form action="/logout" method="GET">
+						<form action="/logout" method="GET" class="logout">
 							<button type="submit">
 								<span>Déconnexion</span>
 							</button>
@@ -35,25 +32,27 @@
 						<div>
 							<h2>Proposer un nouveau jeu</h2>
 						</div>
-						<div>
+						<div class="propo">
 							<label for="gameName">Insérez le nom du jeu :
 							</label>
-							<input type="text" name="gameName" id="gameName">
+							<input type="text" name="gameName" id="gameName" class="propo-content">
 						</div>
-						<div>
+						<div class="propo-photo">
 							<label for="gamePhoto">Insérez une photo du jeu :
 							</label>
 							<input type="file" name="gamePhoto" id="gamePhoto" accept="image/*">
 						</div>
-						<div>
+						<div class="propo">
 							<label for="shortDesc">
 								Décrivez ce jeu comme vous pouvez :
 							</label>
-							<textarea name="shortDesc" id="shortDesc"></textarea>
+							<textarea name="shortDesc" id="shortDesc" class="propo-content"></textarea>
 						</div>
-						<button type="submit">
-							<span>Proposez maintenant</span>
-						</button>
+						<div class="submitting">
+							<button type="submit">
+								<span>Proposez maintenant</span>
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>

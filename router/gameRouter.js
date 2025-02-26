@@ -94,14 +94,84 @@ gameRouter.get('/dashboard', async (req, res) => {
     const users = await prisma.user.findMany();
     const categories = await prisma.category.findMany();
     const games = await prisma.game.findMany();
+    let gameFilter
+    let favoriteGames = [];
 
+    if (req.session.user) {
+        // Récupérer les jeux favoris de l'utilisateur connecté
+        const userId = req.session.user.id;
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            include: { favoriteGames: true } // Inclure les jeux favoris
+        });
+        favoriteGames = user.favoriteGames; // Stocker les jeux favoris
+    } else {
+        // Si l'utilisateur n'est pas connecté, récupérer tous les jeux
+        gameFilter = await prisma.game.findMany({
+            include: {
+                categories: true // Inclure les catégories associées
+            }
+        });
+    }
+
+    if (req.query.category) {
+        // Filtrer les jeux par catégorie
+        const categoryId = parseInt(req.query.category);
+        let category
+
+        if (!isNaN(categoryId)) {
+            gameFilter = await prisma.game.findMany({
+                where: {
+                    categories: {
+                        some: {
+                            id: categoryId // Assurez-vous que l'ID de la catégorie est correct
+                        }
+                    }
+                },
+                include: {
+                    categories: true // Inclure les catégories associées
+                }
+            });
+        } else {
+            category = await prisma.category.findUnique({
+                where: {
+                    name: req.query.category
+                }
+            });
+
+            if (category) {
+                gameFilter = await prisma.game.findMany({
+                    where: {
+                        categories: {
+                            some: {
+                                id: category.id
+                            }
+                        }
+                    },
+                    include: {
+                        categories: true
+                    }
+                });
+            }
+        }
+
+    } else if (req.query.favorites && req.session.user) {
+        gameFilter = favoriteGames;
+    } else {
+        gameFilter = await prisma.game.findMany({
+            include: {
+                categories: true // Inclure les catégories associées
+            }
+        });
+    }
 
     res.render('pages/dashboard.twig', {
         title: "GameReview - Page administrateur",
         user: req.session.user,
         users: users,
         generalCategories: categories,
-        games: games
+        games: games,
+        gameFilter: gameFilter
     })
 })
 
@@ -142,7 +212,7 @@ gameRouter.get('/game/:id', async (req, res) => {
     }
 });
 
-gameRouter.post('/confirmGame', uploadGame.single('gameImage'), async (req, res) => {
+gameRouter.post('/addGame', uploadGame.single('gameImage'), async (req, res) => {
     const users = await prisma.user.findMany();
     const categories = await prisma.category.findMany();
     const games = await prisma.game.findMany();
@@ -220,7 +290,7 @@ gameRouter.post('/modifyGame/:id', uploadGame.single('gameImage'), async (req, r
             where: { id: gameId },
             data: updateData
         });
-console.log('Données de mise à jour:', game);
+        console.log('Données de mise à jour:', game);
         res.redirect('/dashboard');
     } catch (error) {
 
@@ -229,15 +299,10 @@ console.log('Données de mise à jour:', game);
     }
 });
 
-gameRouter.use((req, res, next) => {
-    console.log("Requête brute :", req.rawHeaders);
-    next();
-});
-
 gameRouter.get('/deleteGame/:id', async (req, res) => {
     const gameId = parseInt(req.params.id);
     console.log(gameId);
-    
+
     try {
         const game = await prisma.game.delete({
             where: {
@@ -245,18 +310,8 @@ gameRouter.get('/deleteGame/:id', async (req, res) => {
             }
         });
 
-console.log(game);
+        console.log(game);
 
-
-        // if (game && game.imageUrl) {
-        //     const imagePath = path.join(__dirname, '../public/assets/img/uploads/gamePic', game.imageUrl);
-
-        //     fs.unlink(imagePath, (err) => {
-        //         if (err) {
-        //             console.error("Erreur lors de la suppression de l'image : ", err);
-        //         }
-        //     });
-        // }
         res.redirect('/dashboard');
     } catch (error) {
         console.error(error);
