@@ -15,7 +15,7 @@ h2 {
   color: white;
 }
 
-.connect-container{
+.connect-container {
   position: absolute;
   width: 94%;
   top: 3%;
@@ -58,7 +58,7 @@ label {
   height: 80%;
 }
 
-#login-section form{
+#login-section form {
   margin-top: 15%;
 }
 
@@ -68,6 +68,7 @@ label {
   flex-direction: column;
   gap: 30px;
 }
+
 /* Styles pour les inputs et les boutons */
 input {
   width: 98%;
@@ -86,7 +87,6 @@ input[type="file"] {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 #modification_notification p {
@@ -152,8 +152,8 @@ button:active {
   transform: scale(0.9);
 }
 
-#forgor-container{
-margin-bottom: 2%;
+#forgor-container {
+  margin-bottom: 2%;
 }
 
 #newbutton {
@@ -169,7 +169,7 @@ margin-bottom: 2%;
     display: none;
   }
 
-  .login-signup-container{
+  .login-signup-container {
     justify-content: center;
     max-width: 80%;
   }

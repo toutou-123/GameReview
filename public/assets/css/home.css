@@ -407,3 +407,17 @@ input {
     overflow-y: scroll;
     height: 120px;
 }
+
+#modification_notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modification_notification p {
+    margin: auto;
+    background-color: rgb(5, 158, 0);
+    padding: 10px;
+    margin-top: 20px;
+    font-family: 'Graduate', sans-serif;
+}

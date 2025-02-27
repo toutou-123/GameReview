@@ -263,9 +263,22 @@ button:hover {
     margin: auto;
 }
 
+#confirmGame{
+    width: 20%;
+}
+
+.formButton-container{
+    display: flex;
+    justify-content: center;
+}
+
 #modify-info{
     display: flex;
     justify-content: space-around;
+}
+
+#modifyGame{
+    width: 20%;
 }
 
 #modal-categories{
@@ -275,6 +288,10 @@ button:hover {
     margin-bottom: 2%;
     max-width: 100%;
     overflow-y: scroll;
+}
+
+#confirmCategory{
+    width: 20%;
 }
 
 button {
@@ -332,7 +349,7 @@ button:active {
     margin: 25px auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 65%;
     color: white;
     font-family: 'Graduate', sans-serif;
 }

@@ -46,33 +46,9 @@
 								<a href="/login">Connexion</a>
 							</li>
 						{% endif %}
-						<li>
-							<div id="search-container">
-								<div class="sidebar">
-									<input type="text" placeholder="Rechercher...">
-									<div class="sidebar-item">
-										{% for category in categories %}
-											<div class="category">
-												<a href="/home?category={{ category.name }}">
-													<span>{{ category.name }}</span>
-												</a>
-											</div>
-										{% endfor %}
-									</div>
-								</div>
-								{% if user %}
-									<div id="favorites" role="button">
-										<a href="/home?favorites=true">
-											<span>afficher les favoris</span>
-										</a>
-									</div>
-								{% endif %}
-							</div>
-						</li>
 					</ul>
 				</div>
 			{% endif %}
-
 		</nav>
 	</header>
 	{% block script %}

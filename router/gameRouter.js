@@ -233,10 +233,11 @@ gameRouter.post('/addGame', uploadGame.single('gameImage'), async (req, res) => 
                 }
             }
         })
+        req.session.message = "le jeu a bien été ajouté"
         res.redirect('/dashboard')
     } catch (error) {
         console.log(error);
-
+        req.session.message = "erreur lors de l'ajout du jeu"
         res.render('pages/dashboard.twig', {
             error: error,
             title: "GameReview - Page administrateur",
@@ -291,9 +292,9 @@ gameRouter.post('/modifyGame/:id', uploadGame.single('gameImage'), async (req, r
             data: updateData
         });
         console.log('Données de mise à jour:', game);
+        req.session.message = "le jeu a bien été modifié"
         res.redirect('/dashboard');
     } catch (error) {
-
         console.error(error);
         res.status(500).send('Erreur lors de la modification du jeu');
     }
@@ -311,7 +312,7 @@ gameRouter.get('/deleteGame/:id', async (req, res) => {
         });
 
         console.log(game);
-
+        req.session.message = "le jeu a bien été supprimé"
         res.redirect('/dashboard');
     } catch (error) {
         console.error(error);
@@ -335,6 +336,7 @@ gameRouter.post('/favorites/add/:gameId', async (req, res) => {
                 }
             }
         });
+        req.session.message = "le jeu a bien été mis au favoris"
         res.status(201).send('Jeu ajouté aux favoris');
     } catch (error) {
         console.error(error);

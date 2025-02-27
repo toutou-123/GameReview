@@ -9,6 +9,11 @@
 		<title>{{ title }}</title>
 	</head>
 	<main>
+		<div id="modification_notification">
+			{% if message %}
+				<p>{{ message }}</p>
+			{% endif %}
+		</div>
 		<div id="container">
 			<div>
 				<div id="sidebar">
@@ -104,7 +109,7 @@
 						<input type="text" id="categoryName" name="categoryName" placeholder="Nom de la catégorie" required>
 					</div>
 					<br>
-					<div>
+					<div class="formButton-container">
 						<button type="submit" id="confirmCategory" value="confirmCategory">
 							<span>Ajouter</span>
 						</button>
@@ -166,8 +171,8 @@
 							{% endfor %}
 						</div>
 					</div>
-					<div>
-						<button type="submit" name="confirmGame" value="confirmGame">
+					<div class="formButton-container">
+						<button type="submit" id="confirmGame" name="confirmGame" value="confirmGame">
 							<span>Ajouter jeu</span>
 						</button>
 					</div>
@@ -220,8 +225,8 @@
 						<h3>Catégories du jeu :</h3>
 						<div id="modal-categories"></div>
 					</div>
-					<div>
-						<button type="submit" name="modifyGame" value="modifyGame">
+					<div class="formButton-container">
+						<button type="submit" id="modifyGame" name="modifyGame" value="modifyGame">
 							<span>Modifier jeu</span>
 						</button>
 					</div>
