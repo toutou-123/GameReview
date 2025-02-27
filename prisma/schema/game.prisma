@@ -2,15 +2,15 @@ model Game {
     id           Int        @id @default(autoincrement())
     name         String
     imageUrl     String
-    informations String     @db.VarChar(10000)
+    informations String     @db.Text
     developer    String
-    linkFandom   String
-    linkSteam    String
+    linkFandom   String?
+    linkSteam    String?
     categories   Category[] @relation("GameByCategory")
     comments     Comment[]
     favoritedBy  User[]     @relation("UserFavorites")
     createdAt    DateTime   @default(now())
-    updatedAt    DateTime   @updatedAt
+    updatedAt    DateTime?   @updatedAt
 }
 
 // Certainement ! Les tableaux _GameToCategory et _UserFavorites sont des tableaux de jonction (aussi appelés tables de liaison) dans votre schéma de base de données.
